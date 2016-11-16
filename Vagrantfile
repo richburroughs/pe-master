@@ -20,7 +20,6 @@ Vagrant.configure("2") do |config|
     ./puppet-enterprise-installer -c /vagrant/pe.conf
     /opt/puppetlabs/bin/puppet agent -t
     firewall-cmd --zone=public --add-port=443/tcp --permanent
-    firewall-cmd --zone=public --add-port=3000/tcp --permanent
     firewall-cmd --reload
   SHELL
 end

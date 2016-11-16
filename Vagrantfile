@@ -2,12 +2,13 @@
 # vi: set ft=ruby :
 
 PE_VERSION = "2016.4.2"
+PE_INSTALLER_DIR = "../../installers"
 
 Vagrant.configure("2") do |config|
 
   config.vm.box = "puppetlabs/centos-7.2-64-nocm"
   config.vm.network "forwarded_port", guest: 443, host: 4443
-  config.vm.synced_folder "../../installers", "/vagrant_installers"
+  config.vm.synced_folder "#{PE_INSTALLER_DIR}", "/vagrant_installers"
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "4096"
   end

@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-PE_VERSION = "2016.4.2"
+PE_VERSION = "2016.5.1"
 PE_INSTALLER_DIR = "../../installers"
 
 Vagrant.configure("2") do |config|

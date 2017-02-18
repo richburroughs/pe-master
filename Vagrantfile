@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
       cd /root
       tar xvfz puppet-enterprise-#{PE_VERSION}-el-7-x86_64.tar.gz
       cd puppet-enterprise-#{PE_VERSION}-el-7-x86_64
-      ./puppet-enterprise-installer -c /vagrant/pe.conf
+      ./puppet-enterprise-installer -c /vagrant/files/pe.conf
       /opt/puppetlabs/bin/puppet agent -t
       firewall-cmd --zone=public --add-port=443/tcp --permanent
       firewall-cmd --reload

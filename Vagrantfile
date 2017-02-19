@@ -33,14 +33,15 @@ Vagrant.configure("2") do |config|
   (1..3).each do |i|
     config.vm.define "centos7-#{i}" do |node|
       node.vm.box = "puppetlabs/centos-7.2-64-nocm"
-      node.vm.hostname = "agent1.example.com"
+      node.vm.hostname = "centos7-#{i}.example.com"
       node.vm.network :private_network, ip: "192.168.77.#{2 + i}"
       node.vm.provider "virtualbox" do |vb|
         vb.memory = "1024"
-        vb.name = "agent1"
+        vb.name = "centos7-#{i}"
       end
       node.vm.provision "shell", inline: <<-SHELL
         cp /vagrant/files/hosts /etc/hosts
+        curl -k https://master.example.com:8140/packages/current/install.bash | bash
       SHELL
     end
   end

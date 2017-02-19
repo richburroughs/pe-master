@@ -51,4 +51,17 @@ Vagrant.configure("2") do |config|
       SHELL
     end
   end
+  config.vm.define "centos6" do |node|
+    node.vm.box = "puppetlabs/centos-6.6-64-nocm"
+    node.vm.hostname = "centos6.example.com"
+    node.vm.network :private_network, ip: "192.168.77.6"
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.name = "centos6"
+    end
+    node.vm.provision "shell", inline: <<-SHELL
+      cp /vagrant/files/hosts /etc/hosts
+      curl -k https://master.example.com:8140/packages/current/install.bash | bash
+    SHELL
+  end
 end

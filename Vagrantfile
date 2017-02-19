@@ -3,6 +3,8 @@
 
 PE_VERSION = "2016.5.2"
 PE_INSTALLER_DIR = "../../installers"
+MASTER_MEMORY = 4096
+AGENT_MEMORY = 768
 
 Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
@@ -14,7 +16,7 @@ Vagrant.configure("2") do |config|
     master.vm.network :private_network, ip: "192.168.77.2"
     master.vm.network "forwarded_port", guest: 443, host: 8443, protocol: 'tcp', auto_correct: true
     master.vm.provider "virtualbox" do |vb|
-      vb.memory = "4096"
+      vb.memory = "#{MASTER_MEMORY}"
       vb.name = "vagrant-pe-master"
     end
   
@@ -40,7 +42,7 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = "centos7-#{i}.example.com"
       node.vm.network :private_network, ip: "192.168.77.#{2 + i}"
       node.vm.provider "virtualbox" do |vb|
-        vb.memory = "1024"
+        vb.memory = "#{AGENT_MEMORY}"
         vb.name = "centos7-#{i}"
       end
       node.vm.provision "shell", inline: <<-SHELL
@@ -56,7 +58,7 @@ Vagrant.configure("2") do |config|
     node.vm.hostname = "centos6.example.com"
     node.vm.network :private_network, ip: "192.168.77.6"
     node.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
+      vb.memory = "#{AGENT_MEMORY}"
       vb.name = "centos6"
     end
     node.vm.provision "shell", inline: <<-SHELL
@@ -69,7 +71,7 @@ Vagrant.configure("2") do |config|
     node.vm.hostname = "debian7.example.com"
     node.vm.network :private_network, ip: "192.168.77.7"
     node.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
+      vb.memory = "#{AGENT_MEMORY}"
       vb.name = "debian7"
     end
     node.vm.provision "shell", inline: <<-SHELL
@@ -84,7 +86,7 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = "debian8-#{i}.example.com"
       node.vm.network :private_network, ip: "192.168.77.#{7 + i}"
       node.vm.provider "virtualbox" do |vb|
-        vb.memory = "1024"
+        vb.memory = "#{AGENT_MEMORY}"
         vb.name = "debian8-#{i}"
       end
       node.vm.provision "shell", inline: <<-SHELL

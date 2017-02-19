@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
     config.vm.define "centos7-#{i}" do |node|
       node.vm.box = "puppetlabs/centos-7.2-64-nocm"
       node.vm.hostname = "agent1.example.com"
-      node.vm.network :private_network, ip: "192.168.77.3"
+      node.vm.network :private_network, ip: "192.168.77.#{2 + i}"
       node.vm.provider "virtualbox" do |vb|
         vb.memory = "1024"
         vb.name = "agent1"

@@ -1,0 +1,6 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+192.168.77.2 master master.example.com
+192.168.77.3 centos7-1 centos7-1.example.com
+192.168.77.4 centos7-2 centos7-2.example.com
+192.168.77.5 centos7-3 centos7-3.example.com

@@ -73,7 +73,7 @@ Vagrant.configure("2") do |config|
       vb.name = "debian7"
     end
     node.vm.provision "shell", inline: <<-SHELL
-      cp /vagrant/files/hosts /etc/hosts
+      echo "192.168.77.2 master.example.com master" >> /etc/hosts
       apt-get install -y curl
       curl -k https://master.example.com:8140/packages/current/install.bash | bash
     SHELL
@@ -87,7 +87,7 @@ Vagrant.configure("2") do |config|
       vb.name = "debian8"
     end
     node.vm.provision "shell", inline: <<-SHELL
-      cp /vagrant/files/hosts /etc/hosts
+      echo "192.168.77.2 master.example.com master" >> /etc/hosts
       apt-get install -y curl
       curl -k https://master.example.com:8140/packages/current/install.bash | bash
     SHELL

@@ -19,15 +19,18 @@ Vagrant.configure("2") do |config|
     end
   
     master.vm.provision "shell", inline: <<-SHELL
+      systemctl stop firewalld
+      systemctl disable firewalld
       cp /vagrant/files/hosts /etc/hosts
       cp /vagrant_installers/puppet-enterprise-#{PE_VERSION}-el-7-x86_64.tar.gz /root
       cd /root
       tar xvfz puppet-enterprise-#{PE_VERSION}-el-7-x86_64.tar.gz
       cd puppet-enterprise-#{PE_VERSION}-el-7-x86_64
       ./puppet-enterprise-installer -c /vagrant/files/pe.conf
+      cp /vagrant/files/autosign.conf /etc/puppetlabs/puppet
       /opt/puppetlabs/bin/puppet agent -t
-      firewall-cmd --zone=public --add-port=443/tcp --permanent
-      firewall-cmd --reload
+#     firewall-cmd --zone=public --add-port=443/tcp --permanent
+#     firewall-cmd --reload
     SHELL
   end
   (1..3).each do |i|
@@ -40,6 +43,8 @@ Vagrant.configure("2") do |config|
         vb.name = "centos7-#{i}"
       end
       node.vm.provision "shell", inline: <<-SHELL
+        systemctl stop firewalld
+        systemctl disable firewalld
         cp /vagrant/files/hosts /etc/hosts
         curl -k https://master.example.com:8140/packages/current/install.bash | bash
       SHELL

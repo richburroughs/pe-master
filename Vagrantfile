@@ -74,6 +74,7 @@ Vagrant.configure("2") do |config|
     end
     node.vm.provision "shell", inline: <<-SHELL
       cp /vagrant/files/hosts /etc/hosts
+      apt-get install -y curl
       curl -k https://master.example.com:8140/packages/current/install.bash | bash
     SHELL
   end

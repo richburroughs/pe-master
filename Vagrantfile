@@ -21,7 +21,10 @@ Vagrant.configure("2") do |config|
     master.vm.provision "shell", inline: <<-SHELL
       systemctl stop firewalld
       systemctl disable firewalld
+      yum install -y epel-release
+      yum install -y jq
       cp /vagrant/files/hosts /etc/hosts
+      # PE install
       cp /vagrant_installers/puppet-enterprise-#{PE_VERSION}-el-7-x86_64.tar.gz /root
       cd /root
       tar xvfz puppet-enterprise-#{PE_VERSION}-el-7-x86_64.tar.gz
@@ -29,8 +32,6 @@ Vagrant.configure("2") do |config|
       ./puppet-enterprise-installer -c /vagrant/files/pe.conf
       cp /vagrant/files/autosign.conf /etc/puppetlabs/puppet
       /opt/puppetlabs/bin/puppet agent -t
-#     firewall-cmd --zone=public --add-port=443/tcp --permanent
-#     firewall-cmd --reload
     SHELL
   end
   (1..3).each do |i|

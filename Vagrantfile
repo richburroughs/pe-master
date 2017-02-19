@@ -78,4 +78,18 @@ Vagrant.configure("2") do |config|
       curl -k https://master.example.com:8140/packages/current/install.bash | bash
     SHELL
   end
+  config.vm.define "debian8" do |node|
+    node.vm.box = "debian/jessie64"
+    node.vm.hostname = "debian8.example.com"
+    node.vm.network :private_network, ip: "192.168.77.8"
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.name = "debian8"
+    end
+    node.vm.provision "shell", inline: <<-SHELL
+      cp /vagrant/files/hosts /etc/hosts
+      apt-get install -y curl
+      curl -k https://master.example.com:8140/packages/current/install.bash | bash
+    SHELL
+  end
 end

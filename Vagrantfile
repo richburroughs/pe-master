@@ -64,4 +64,17 @@ Vagrant.configure("2") do |config|
       curl -k https://master.example.com:8140/packages/current/install.bash | bash
     SHELL
   end
+  config.vm.define "debian7" do |node|
+    node.vm.box = "debian/wheezy64"
+    node.vm.hostname = "debian7.example.com"
+    node.vm.network :private_network, ip: "192.168.77.7"
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.name = "debian7"
+    end
+    node.vm.provision "shell", inline: <<-SHELL
+      cp /vagrant/files/hosts /etc/hosts
+      curl -k https://master.example.com:8140/packages/current/install.bash | bash
+    SHELL
+  end
 end

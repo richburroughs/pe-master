@@ -4,7 +4,7 @@
 PE_VERSION = "2016.5.2"
 PE_INSTALLER_DIR = "../../installers"
 MASTER_MEMORY = 4096
-AGENT_MEMORY = 768
+AGENT_MEMORY = 512
 
 Vagrant.configure("2") do |config|
   config.ssh.insert_key = false

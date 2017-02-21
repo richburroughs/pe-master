@@ -9,15 +9,15 @@ AGENT_MEMORY = 512
 Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
 
-  config.vm.define "master", primary: true do |master|
+  config.vm.define "pe-puppet", primary: true do |master|
     master.vm.box = "puppetlabs/centos-7.2-64-nocm"
     master.vm.synced_folder "#{PE_INSTALLER_DIR}", "/vagrant_installers"
-    master.vm.hostname = "master.example.com"
+    master.vm.hostname = "pe-puppet.example.com"
     master.vm.network :private_network, ip: "192.168.77.2"
     master.vm.network "forwarded_port", guest: 443, host: 8443, protocol: 'tcp', auto_correct: true
     master.vm.provider "virtualbox" do |vb|
       vb.memory = "#{MASTER_MEMORY}"
-      vb.name = "vagrant-pe-master"
+      vb.name = "vagrant-pe-puppet"
     end
   
     master.vm.provision "shell", inline: <<-SHELL
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
         systemctl stop firewalld
         systemctl disable firewalld
         cp /vagrant/files/hosts /etc/hosts
-        curl -k https://master.example.com:8140/packages/current/install.bash | bash
+        curl -k https://pe-puppet.example.com:8140/packages/current/install.bash | bash
       SHELL
     end
   end
@@ -63,7 +63,7 @@ Vagrant.configure("2") do |config|
     end
     node.vm.provision "shell", inline: <<-SHELL
       cp /vagrant/files/hosts /etc/hosts
-      curl -k https://master.example.com:8140/packages/current/install.bash | bash
+      curl -k https://pe-puppet.example.com:8140/packages/current/install.bash | bash
     SHELL
   end
   config.vm.define "debian7" do |node|
@@ -75,9 +75,9 @@ Vagrant.configure("2") do |config|
       vb.name = "debian7"
     end
     node.vm.provision "shell", inline: <<-SHELL
-      echo "192.168.77.2 master.example.com master" >> /etc/hosts
+      echo "192.168.77.2 pe-puppet.example.com master" >> /etc/hosts
       apt-get install -y curl
-      curl -k https://master.example.com:8140/packages/current/install.bash | bash
+      curl -k https://pe-puppet.example.com:8140/packages/current/install.bash | bash
     SHELL
   end
   (1..3).each do |i|
@@ -90,9 +90,9 @@ Vagrant.configure("2") do |config|
         vb.name = "debian8-#{i}"
       end
       node.vm.provision "shell", inline: <<-SHELL
-        echo "192.168.77.2 master.example.com master" >> /etc/hosts
+        echo "192.168.77.2 pe-puppet.example.com master" >> /etc/hosts
         apt-get install -y curl
-        curl -k https://master.example.com:8140/packages/current/install.bash | bash
+        curl -k https://pe-puppet.example.com:8140/packages/current/install.bash | bash
       SHELL
     end
   end

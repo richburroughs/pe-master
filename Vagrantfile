@@ -1,8 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-PE_VERSION = "2016.5.2"
-PE_INSTALLER_DIR = "../../installers"
+PE_VERSION = "2017.3.2"
+PE_INSTALLER_DIR = "tmp/"
 MASTER_MEMORY = 4096
 AGENT_MEMORY = 512
 
